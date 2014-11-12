@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config showDestinationsInMessageStore="false" base64EncodeMessages="true" scrollMessagesDuringBrowse="true" lookAndFeel="com.apple.laf.AquaLookAndFeel" enableJython="true" queueBrowseConsumerTimeout="0" selectorImpl="hermes.selector.JAMSELMessageSelectorFactory" correctDropSemantics="false" autoBrowseRefreshRate="10" maxColumnsInStatisticsTable="10" displayFactoryAdmin="true" copyJMSPriority="true" copyJMSReplyTo="true" copyJMSExpiration="true" copyJMSType="true" copyJMSCorrelationID="true" copyJMSProviderProperties="true" maxMessagesInBrowserPane="1000" messageFilesDir="/Applications/HermesJMS/bin/./messages" auditDirectory="/temp" maxThreadPoolSize="5" lastEditedByHermesVersion="v1.14" lastEditedByUser="ppoissinger">
+    <classpathGroup id="JBoss_EAP">
+        <library noFactories="true" jar="/Users/ppoissinger/servers/jboss-eap-6.2/bin/client/jboss-client.jar"/>
+    </classpathGroup>
+    <renderer className="hermes.renderers.DefaultMessageRenderer">
+        <properties>
+            <property value="false" name="bytesIsString"/>
+            <property value="false" name="bytesIsObject"/>
+            <property value="true" name="active"/>
+            <property value="100" name="messageCache"/>
+            <property value="65536" name="bytesIsObjectBufferSize"/>
+            <property value="false" name="toStringOnObjectMessage"/>
+        </properties>
+    </renderer>
+    <renderer className="hermes.renderers.DefaultMessageHeaderRenderer">
+        <properties>
+            <property value="true" name="active"/>
+        </properties>
+    </renderer>
+    <renderer className="hermes.renderers.ToStringMessageRenderer">
+        <properties>
+            <property value="true" name="active"/>
+        </properties>
+    </renderer>
+    <renderer className="hermes.renderers.HexMessageRenderer">
+        <properties>
+            <property value="true" name="active"/>
+        </properties>
+    </renderer>
+    <renderer className="hermes.renderers.XMLMessageRenderer">
+        <properties>
+            <property value="true" name="active"/>
+        </properties>
+    </renderer>
+    <renderer className="hermes.renderers.fix.FIXMessageRenderer">
+        <properties>
+            <property value="true" name="displayValueWithEnum"/>
+            <property value="true" name="active"/>
+            <property value="100" name="messageCache"/>
+            <property value="true" name="displayHeaderAndTrailer"/>
+        </properties>
+    </renderer>
+    <renderer className="hermes.renderers.EBCDICMessageRenderer">
+        <properties>
+            <property value="16" name="rowLength"/>
+            <property value="." name="undisplayableChar"/>
+            <property value="true" name="active"/>
+            <property value="5242880" name="maxMessageSize"/>
+        </properties>
+    </renderer>
+    <factory classpathId="JBoss_EAP">
+        <provider className="hermes.JNDIConnectionFactory">
+            <properties>
+                <property value="jms/RemoteConnectionFactory" name="binding"/>
+                <property value="org.jboss.naming.remote.client.InitialContextFactory" name="initialContextFactory"/>
+                <property value="remote://127.0.0.1:4447" name="providerURL"/>
+                <property value="org.jboss.naming.remote.client" name="urlPkgPrefixes"/>
+            </properties>
+        </provider>
+        <connection connectionPerThread="false" clientID="" password="guest@123" username="guest">
+            <session useConsumerForQueueBrowse="false" checkSizePeriod="1000" checkSize="false" audit="false" transacted="true" reconnects="0" id="JBoss"/>
+        </connection>
+        <!-- $JBOSS_HOME/bin/add-user.sh -s -a -u guest -p guest@123 -ro guest -->
+        <destination durable="false" domain="2" shortName="SuperTopic" name="jms/topic/SuperTopic"/>
+        <destination durable="false" domain="1" shortName="SuperQueue" name="jms/queue/SuperQueue"/>
+        <extension className="hermes.ext.DefaultHermesAdminFactory">
+            <properties/>
+        </extension>
+    </factory>
+    <quickFIX filterSessionMsgTypes="false" cacheSize="1024"/>
+</config>
