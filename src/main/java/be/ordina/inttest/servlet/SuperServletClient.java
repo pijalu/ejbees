@@ -2,6 +2,7 @@ package be.ordina.inttest.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 import javax.jms.Connection;
@@ -33,8 +34,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/SuperServletClient")
 public class SuperServletClient extends HttpServlet {
-
     private static final long serialVersionUID = -8314035702649252239L;
+    private static AtomicInteger counter=new AtomicInteger(1);
 
     private static final int MSG_COUNT = 5;
 
@@ -68,9 +69,10 @@ public class SuperServletClient extends HttpServlet {
             out.write("<h2>Following messages will be send to the destination:</h2>");
             TextMessage message = session.createTextMessage();
             for (int i = 0; i < MSG_COUNT; i++) {
-                message.setText("This is message " + (i + 1));
+            	int val=counter.getAndAdd(1);
+                message.setText("This is message " + val);
                 messageProducer.send(message);
-                out.write("Message (" + i + "): " + message.getText() + "</br>");
+                out.write("Message (" + val + "): " + message.getText() + "</br>");
             }
             out.write("<p><i>Go to your JBoss EAP server console or log to see the result of messages processing</i></p>");
             out.write("<a href='SuperServletClient'>Send on queue</a></br><a href='SuperServletClient?topic'>Send on topic</a>");
