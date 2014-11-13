@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * </p>
  * 
  * <p>
- * The servlet is registered and mapped to /HelloWorldMDBServletClient using the {@linkplain WebServlet
+ * The servlet is registered and mapped to /SuperServletClient using the {@linkplain WebServlet
  * @HttpServlet}.
  * </p>
  * 
